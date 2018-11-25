@@ -29,6 +29,7 @@ with open('./pyplot/label-vertex.txt', mode='rt') as f:
         plt.title('label-vertex')
         fig = plt.gcf()
         fig.savefig("./pyplot/%d_label-vertex_log.png", dpi=300)
+        
 # degree
 with open('./pyplot/degree.txt', mode='rt') as f:
     while True:
@@ -103,6 +104,7 @@ with open('./pyplot/indegree.txt', mode='rt') as f:
         plt.title('indegree_log')
         fig = plt.gcf()
         fig.savefig("./pyplot/%d_indegree_log.png", dpi=300)
+        
 # outdegree
 with open('./pyplot/outdegree.txt', mode='rt') as f:
     while True:

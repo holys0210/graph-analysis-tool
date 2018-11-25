@@ -71,12 +71,16 @@ namespace snu {
 		std::unordered_map <Vlabel, Label_of_Vertices *> vlabel_to_class;
 		std::unordered_map <Elabel, Label_of_Edges *>    elabel_to_class;
 
-		std::unordered_set <std::pair <Vid, Vid> > is_connected;
+		struct pair_hash {
+			inline unsigned long long operator()(const std::pair<Vid, Vid> &v) const {
+				return ((unsigned long long)v.first << 32) + v.second;
+			}
+		};
+
+		std::unordered_set <std::pair<Vid, Vid>, pair_hash> is_connected;
 
 		unsigned int negative_edge_num = 0;
 		char visit = 0;
-
-		//std::unordered_map <std::pair <VId, VId>, Edge *> id_pair_to_edge;
 
 		Graph(); // prevent from creating Graph class and allow creating graph in subclass
 		~Graph(); // destructor

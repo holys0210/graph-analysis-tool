@@ -2,6 +2,8 @@
 
 namespace snu {
 
+	Graph::Graph() {}
+
 	/* destructor */
 	Graph::~Graph() {
 		// delete vertex, edge, vertex_label, edge_label;
