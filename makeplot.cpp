@@ -37,7 +37,7 @@ namespace snu {
 		degree.reserve(n);
 		for(auto it = graph->id_to_vertex.begin(); it != graph->id_to_vertex.end(); it++)
 			degree.push_back((*it->second).indegree);
-		
+
 		std::sort(degree.begin(), degree.end());
 		for(auto it = degree.begin(); it != degree.end(); it++)
 			out << *it << " ";
@@ -51,7 +51,7 @@ namespace snu {
 		degree.reserve(n);
 		for(auto it = graph->id_to_vertex.begin(); it != graph->id_to_vertex.end(); it++)
 			degree.push_back((*it->second).edges.size());
-		
+
 		std::sort(degree.begin(), degree.end());
 		for(auto it = degree.begin(); it != degree.end(); it++)
 			out << *it << " ";
@@ -64,16 +64,24 @@ namespace snu {
 
 		char buf[MAX_BUF];
 
-		Py_Initialize();
-		if(Py_IsInitialized()) {
-			while(fgets(buf, MAX_BUF, fp)) {
-				sprintf(buf, buf, *plot);
-				PyRun_SimpleString(buf);
-			}
-			Py_Finalize();
-		}
+		PyObject *pName, *pModule, *pDict, *pFunc, *pValue;
 
-		fclose(fp);
+
+		Py_Initialize();
+		pName = PyString_FromString("plot.py");
+		pModule = PyImport_Import(pName);
+		pDict = PyModule_GetDict(pModule);
+		pFunc = PyDict_GetItemString(pDict, 1);
+
+		if(PyCallable_Check(pFunc)){
+			PyObject_CallObject(pFunc, NULL);
+		}
+		else{
+			PyErr_Print();
+		}
+		Py_DECREF(pModule);
+		Py_DECREF(PName);
+		Py_Finalize();
 	}
 
 	void make_plot(USGraph *graph, Plot *plot) {
@@ -105,7 +113,7 @@ namespace snu {
 		degree.reserve(n);
 		for(auto it = graph->id_to_vertex.begin(); it != graph->id_to_vertex.end(); it++)
 			degree.push_back((*it->second).indegree);
-		
+
 		std::sort(degree.begin(), degree.end());
 		for(auto it = degree.begin(); it != degree.end(); it++)
 			out << *it << " ";
