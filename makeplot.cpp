@@ -59,21 +59,13 @@ namespace snu {
 		out.close();
 
 		/* pyplot */
-		FILE *fp = fopen("ploy.py", "r");
-		if(fp == NULL) return; // error
-
-		char buf[MAX_BUF];
-
 		PyObject *pName, *pModule, *pDict, *pFunc, *pValue;
-
-
 		Py_Initialize();
 		pName = PyString_FromString("plot.py");
 		pModule = PyImport_Import(pName);
 		pDict = PyModule_GetDict(pModule);
 		pFunc = PyDict_GetItemString(pDict, 1);
-
-		if(PyCallable_Check(pFunc)){
+		if(PyCallable_Check(pFunc)) {
 			PyObject_CallObject(pFunc, NULL);
 		}
 		else{
